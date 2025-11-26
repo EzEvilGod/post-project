@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Inertia Labs - Flow-Glove</title>
+    <style>
+        /* CSS per lo Stile Streetware/Tech */
+        :root {
+            --colore-principale: #000000;
+            --colore-accento: #00FFC0; /* Verde Neon, molto tech/street */
+            --colore-sfondo: #1a1a1a;
+            --colore-testo-chiaro: #f0f0f0;
+            --font-principale: 'Arial', sans-serif;
+            --font-accento: 'Monospace', monospace;
+        }
+
+        body {
+            font-family: var(--font-principale);
+            background-color: var(--colore-sfondo);
+            color: var(--colore-testo-chiaro);
+            margin: 0;
+            padding: 20px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+        }
+
+        .container {
+            width: 90%;
+            max-width: 600px;
+            background-color: var(--colore-principale);
+            border-radius: 12px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+            padding: 0;
+            overflow: hidden;
+        }
+
+        /* Sezione Header/Brand */
+        .header {
+            padding: 20px;
+            border-bottom: 2px solid var(--colore-accento);
+        }
+
+        .brand-name {
+            font-family: var(--font-accento);
+            font-size: 1.8em;
+            font-weight: bold;
+            color: var(--colore-accento);
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            margin-bottom: 5px;
+        }
+
+        .brand-slogan {
+            font-size: 0.8em;
+            opacity: 0.7;
+            border-left: 3px solid var(--colore-accento);
+            padding-left: 10px;
+            margin-top: 5px;
+        }
+
+        /* Sezione Post/Immagine: URL inserito qui */
+        .post-image {
+            width: 100%;
+            height: auto;
+            display: block;
+            background-image: url('https://i.imgur.com/e2FhB3V.jpeg'); 
+            background-size: cover;
+            background-position: center;
+            aspect-ratio: 1 / 1; /* Formato quadrato stile Instagram */
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        /* Sezione Didascalia */
+        .caption-section {
+            padding: 20px;
+        }
+
+        .caption-title {
+            font-size: 1.4em;
+            color: var(--colore-accento);
+            margin-bottom: 10px;
+            font-weight: bold;
+            text-transform: uppercase;
+        }
+
+        .caption-text {
+            line-height: 1.6;
+            margin-bottom: 15px;
+            font-size: 1em;
+        }
+
+        .hashtags {
+            color: var(--colore-accento);
+            font-size: 0.9em;
+            line-height: 1.8;
+            word-spacing: 5px;
+        }
+
+        .cta-button {
+            display: block;
+            width: 100%;
+            padding: 15px;
+            background-color: var(--colore-accento);
+            color: var(--colore-principale);
+            text-align: center;
+            text-decoration: none;
+            font-weight: bold;
+            border-radius: 5px;
+            margin-top: 20px;
+            transition: background-color 0.3s, transform 0.1s;
+        }
+
+        .cta-button:hover {
+            background-color: #00E6B9;
+            transform: translateY(-2px);
+        }
+
+        /* Media Query per schermi più piccoli */
+        @media (max-width: 480px) {
+            body {
+                padding: 10px;
+            }
+            .brand-name {
+                font-size: 1.5em;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        
+        <div class="header">
+            <div class="brand-name">Inertia Labs</div>
+            <p class="brand-slogan">
+                La ridefinizione dell'interazione fisica. Estendi i tuoi sensi.
+            </p>
+        </div>
+
+        <div class="post-image" aria-label="Immagine del Flow-Glove di Inertia Labs: guanto tech illuminato al neon su superficie urbana.">
+            </div>
+
+        <div class="caption-section">
+            <h2 class="caption-title">Inertia Flow-Glove</h2>
+            
+            <div class="caption-text">
+                <p>Smetti di guardare il tuo smartphone e inizia a *sentire* il mondo.</p>
+                <p>Ti presentiamo **Inertia Flow-Glove**. Il primo guanto che non solo ti protegge, ma espande i tuoi sensi. Tocca, registra le texture, naviga con i gesti e segnala ogni tua mossa con i LED dinamici integrati.</p>
+                <p>La strada è la tua. È ora di toccarla, di sentirla, di controllarla.</p>
+            </div>
+            
+            <div class="hashtags">
+                #InertiaLabs #FlowGlove #SurfaceSense #StreetTech #FutureOfTouch #EspandiISensi #UrbanGear
+            </div>
+
+            <a href="#" class="cta-button">SCOPRI DI PIÙ E PREORDINA ORA</a>
+        </div>
+
+    </div>
+
+</body>
+  </html>
+  
