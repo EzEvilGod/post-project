@@ -1,0 +1,444 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Corsi Ifts 2025</title>
+<!-- Google Fonts -->
+<link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet" />
+<!-- Icone -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+<!-- Leaflet CSS -->
+<link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
+<style>
+  /* Reset di base */
+  * {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+  }
+
+  body {
+    font-family: 'Roboto', sans-serif;
+    line-height: 1.6;
+    color: #333;
+    background-color: #f4f4f4;
+  }
+
+  /* Header */
+  header {
+    background-color: #005f73;
+    padding: 20px 10px;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+    position: sticky;
+    top: 0;
+    z-index: 999;
+    position: relative;
+  }
+
+  /* Menu hamburger */
+  .menu-toggle {
+    display: none;
+    font-size: 1.5rem;
+    cursor: pointer;
+    color: #fff;
+    position: absolute;
+    top: 20px;
+    right: 20px;
+  }
+
+  nav ul {
+    display: flex;
+    justify-content: center;
+    list-style: none;
+  }
+
+  nav ul li {
+    margin: 0 15px;
+  }
+
+  nav ul li a {
+    color: #fff;
+    text-decoration: none;
+    font-weight: 600;
+    padding: 8px 12px;
+    border-radius: 4px;
+    transition: background-color 0.3s, transform 0.3s;
+    display: flex;
+    align-items: center;
+  }
+
+  nav ul li a:hover {
+    background-color: #0a9396;
+    transform: scale(1.05);
+  }
+
+  /* Hero section con effetto overlay più elegante */
+  .hero {
+    position: relative;
+    height: 100vh;
+    background-image: url('https://images.unsplash.com/photo-1506744038136-46273834b3fb?ixlib=rb-4.0.0&auto=format&fit=crop&w=1600&q=80');
+    background-size: cover;
+    background-position: center;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0 20px;
+  }
+
+  .hero::after {
+    content: "";
+    position: absolute;
+    top: 0; left: 0; right: 0; bottom: 0;
+    background-color: rgba(0, 0, 0, 0.4);
+  }
+
+  .hero-content {
+    position: relative;
+    max-width: 800px;
+    text-align: center;
+    color: #fff;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 8px 16px rgba(0,0,0,0.3);
+  }
+
+  .hero h1 {
+    font-size: 3rem;
+    margin-bottom: 20px;
+  }
+
+  .hero p {
+    font-size: 1.2rem;
+    margin-bottom: 30px;
+  }
+
+  /* Pulsante migliorato */
+  .btn {
+    background-color: #0a9396;
+    color: #fff;
+    padding: 14px 28px;
+    font-size: 1rem;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    text-decoration: none;
+  }
+
+  .btn:hover {
+    background-color: #94d2bd;
+    transform: translateY(-2px);
+    box-shadow: 0 8px 12px rgba(0,0,0,0.2);
+  }
+
+  /* Sezioni con divider e dettagli visivi */
+  section {
+    padding: 60px 20px;
+    background-color: #fff;
+    margin-bottom: 20px;
+    border-radius: 12px;
+    max-width: 1200px;
+    margin-left: auto;
+    margin-right: auto;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+  }
+
+  section h2 {
+    text-align: center;
+    margin-bottom: 30px;
+    font-size: 2.5rem;
+    color: #005f73;
+    position: relative;
+  }
+
+  section h2::after {
+    content: "";
+    display: block;
+    width: 60px;
+    height: 4px;
+    background-color: #0a9396;
+    margin: 10px auto 0 auto;
+    border-radius: 2px;
+  }
+
+  p {
+    font-size: 1.1rem;
+    line-height: 1.8;
+    margin-bottom: 20px;
+  }
+
+  /* Card styles con hover più dinamico */
+  .cards {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 20px;
+  }
+
+  .card {
+    background-color: #e0f7fa;
+    padding: 20px;
+    border-radius: 12px;
+    flex: 1 1 250px;
+    max-width: 300px;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+    transition: transform 0.3s, box-shadow 0.3s, background-color 0.3s;
+  }
+
+  .card:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 12px 24px rgba(0,0,0,0.2);
+    background-color: #b2ebf2;
+  }
+
+  .card h3 {
+    margin-bottom: 15px;
+    color: #005f73;
+    font-size: 1.5rem;
+    display: flex;
+    align-items: center;
+  }
+
+  .card h3 i {
+    margin-right: 10px;
+  }
+
+  /* Mappa con stile più elegante */
+  .map {
+    width: 100%;
+    height: 400px;
+    margin-top: 20px;
+    border-radius: 12px;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+  }
+
+  /* Footer */
+  footer {
+    background-color: #005f73;
+    color: #d4f1f4;
+    padding: 20px 10px;
+    text-align: center;
+  }
+
+  /* Feedback messaggi */
+  #feedback {
+    margin: 10px auto;
+    max-width: 600px;
+    padding: 10px 20px;
+    border-radius: 8px;
+    font-weight: bold;
+    display: none;
+  }
+  #feedback.success {
+    background-color: #d4edda;
+    color: #155724;
+  }
+  #feedback.error {
+    background-color: #f8d7da;
+    color: #721c24;
+  }
+
+  /* Responsive migliorato */
+  @media (max-width: 768px) {
+    nav ul {
+      position: absolute;
+      top: 60px;
+      right: 0;
+      background-color: #005f73;
+      flex-direction: column;
+      width: 200px;
+      max-height: 0;
+      overflow: hidden;
+      transition: max-height 0.3s ease;
+    }
+    nav ul.show {
+      max-height: 500px;
+    }
+    .menu-toggle {
+      display: block;
+    }
+    body {
+      padding-top: 60px; /* spazio per menu mobile */
+    }
+    section {
+      padding: 40px 20px;
+    }
+  }
+
+  /* Stile per FAQ toggle */
+  .faq-item {
+    margin-bottom: 15px;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    overflow: hidden;
+  }
+  .faq-question {
+    background-color: #0a9396;
+    color: #fff;
+    padding: 12px;
+    cursor: pointer;
+    font-weight: bold;
+    transition: background-color 0.3s;
+  }
+  .faq-question:hover {
+    background-color: #94d2bd;
+  }
+  .faq-answer {
+    display: none;
+    padding: 12px;
+    background-color: #e0f7fa;
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="menu-toggle" id="menu-toggle"><i class="fas fa-bars"></i></div>
+  <nav aria-label="Menu principale">
+    <ul id="menu">
+      <li><a href="#home" aria-current="page"><i class="fas fa-home"></i> Home</a></li>
+      <li><a href="#chi-siamo"><i class="fas fa-users"></i> Chi Siamo</a></li>
+      <li><a href="#cosa-facciamo"><i class="fas fa-lightbulb"></i> Cosa Facciamo</a></li>
+      <li><a href="#dove-siamo"><i class="fas fa-map-marker-alt"></i> Dove Siamo</a></li>
+      <li><a href="#contatti"><i class="fas fa-envelope"></i> Contatti</a></li>
+      <li><a href="#faq"><i class="fas fa-question-circle"></i> FAQ</a></li>
+    </ul>
+  </nav>
+</header>
+
+<!-- Hero -->
+<section class="hero" id="home" aria-labelledby="titolo-home">
+  <div class="hero-content">
+    <h1 id="titolo-home">Benvenuti nei Corsi Ifts 2025</h1>
+    <p>Formazione professionale, corsi di alta qualità e opportunità per il tuo futuro. Unisciti a noi!</p>
+    <a href="#chi-siamo" class="btn">Scopri di più</a>
+  </div>
+</section>
+
+<!-- Chi Siamo -->
+<section id="chi-siamo" aria-labelledby="titolo-chi-siamo">
+  <h2 id="titolo-chi-siamo">Chi Siamo</h2>
+  <p>Siamo un'organizzazione dedicata ai Corsi Ifts, offrendo formazione di alta qualità per preparare i professionisti di domani. Offriamo corsi innovativi, stage e collaborazioni con aziende leader.</p>
+</section>
+
+<!-- Cosa Facciamo -->
+<section id="cosa-facciamo" aria-labelledby="titolo-cosa">
+  <h2 id="titolo-cosa">Cosa Facciamo</h2>
+  <div class="cards">
+    <div class="card">
+      <h3><i class="fas fa-microphone"></i> Corsi</h3>
+      <p>Offriamo corsi di formazione professionale nelle più diverse aree, con docenti qualificati e percorsi aggiornati alle esigenze del mercato.</p>
+    </div>
+    <div class="card">
+      <h3><i class="fas fa-tools"></i> Stage</h3>
+      <p>Collaboriamo con aziende partner per offrire stage pratici che permettano agli studenti di acquisire esperienza reale.</p>
+    </div>
+    <div class="card">
+      <h3><i class="fas fa-handshake"></i> Collaborazioni</h3>
+      <p>Stiamo creando una rete di partner e aziende per supportare l'inserimento lavorativo dei nostri studenti.</p>
+    </div>
+  </div>
+</section>
+
+<!-- Dove Siamo -->
+<section id="dove-siamo" aria-labelledby="titolo-dove">
+  <h2 id="titolo-dove">Dove Siamo</h2>
+  <p>La nostra sede si trova nel cuore della città, facilmente raggiungibile con i mezzi pubblici e in auto.</p>
+  <div class="map" id="map" aria-label="Mappa della sede"></div>
+</section>
+
+<!-- Contatti -->
+<section id="contatti" aria-labelledby="titolo-contatti">
+  <h2 id="titolo-contatti">Contatti</h2>
+  <p>Per info, iscrizioni e altro, contattaci:</p>
+  <ul>
+    <li><i class="fas fa-phone"></i> Telefono: 0123456789</li>
+    <li><i class="fas fa-envelope"></i> Email: info@corsiifts2025.it</li>
+  </ul>
+  <!-- Feedback messaggi -->
+  <div id="feedback"></div>
+</section>
+
+<!-- FAQ Interattiva -->
+<section id="faq" aria-labelledby="titolo-faq">
+  <h2 id="titolo-faq">Domande frequenti</h2>
+  <div class="faq-item">
+    <div class="faq-question">Come posso iscrivermi?</div>
+    <div class="faq-answer">Puoi inviare una mail o chiamarci per ricevere tutte le informazioni.</div>
+  </div>
+  <div class="faq-item">
+    <div class="faq-question">Quali sono i corsi disponibili?</div>
+    <div class="faq-answer">Offriamo corsi in vari settori tra cui tecnologia, marketing, design e management.</div>
+  </div>
+</section>
+
+<!-- Pulsante torna su -->
+<button id="scrollTopBtn" aria-label="Torna su"><i class="fas fa-chevron-up"></i></button>
+
+<!-- Footer -->
+<footer>
+  <p>&copy; 2025 Corsi Ifts. Tutti i diritti riservati.</p>
+</footer>
+
+<!-- Script -->
+<script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+<script>
+  // Funzione per mostrare messaggi di feedback
+  function showFeedback(message, success = true) {
+    const feedbackDiv = document.getElementById('feedback');
+    feedbackDiv.innerText = message;
+    feedbackDiv.className = success ? 'success' : 'error';
+    feedbackDiv.style.display = 'block';
+    setTimeout(() => {
+      feedbackDiv.style.display = 'none';
+    }, 3000);
+  }
+
+  // Inizializza la mappa
+  try {
+    var map = L.map('map').setView([45.4642, 9.19], 13);
+    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+      attribution: '&copy; OpenStreetMap contributors'
+    }).addTo(map);
+    L.marker([45.4642, 9.19]).addTo(map)
+      .bindPopup('Sede dei Corsi Ifts')
+      .openPopup();
+  } catch (e) {
+    document.getElementById('map').innerHTML = '<p style="color:red;text-align:center;">Impossibile caricare la mappa.</p>';
+    showFeedback('Errore nel caricamento della mappa.', false);
+  }
+
+  // Menu hamburger
+  document.getElementById('menu-toggle').addEventListener('click', () => {
+    document.getElementById('menu').classList.toggle('show');
+  });
+
+  // Bottone torna su
+  const scrollBtn = document.getElementById('scrollTopBtn');
+  window.onscroll = () => {
+    if (document.body.scrollTop > 100 || document.documentElement.scrollTop > 100) {
+      scrollBtn.style.display = 'block';
+    } else {
+      scrollBtn.style.display = 'none';
+    }
+  };
+  document.getElementById('scrollTopBtn').addEventListener('click', () => {
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  });
+
+  // FAQ toggle
+  document.querySelectorAll('.faq-question').forEach(q => {
+    q.addEventListener('click', () => {
+      const answer = q.nextElementSibling;
+      if (answer.style.display === 'none' || answer.style.display === '') {
+        answer.style.display = 'block';
+      } else {
+        answer.style.display = 'none';
+      }
+    });
+  });
+</script>
+
+</body>
+</html>
